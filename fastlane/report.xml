@@ -5,67 +5,67 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: get_info_plist_value" time="0.003775">
+      <testcase classname="fastlane.lanes" name="00: get_info_plist_value" time="0.003718">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: get_info_plist_value" time="0.003299">
+      <testcase classname="fastlane.lanes" name="01: get_info_plist_value" time="0.003217">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: Switch to post_to_slack lane" time="0.000394">
+      <testcase classname="fastlane.lanes" name="02: Switch to post_to_slack lane" time="0.000377">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: slack" time="0.923088">
+      <testcase classname="fastlane.lanes" name="03: slack" time="0.452717">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: gym" time="11.757989">
+      <testcase classname="fastlane.lanes" name="04: gym" time="12.561818">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: Switch to post_to_slack lane" time="0.000492">
+      <testcase classname="fastlane.lanes" name="05: Switch to post_to_slack lane" time="0.00041">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: slack" time="0.707064">
+      <testcase classname="fastlane.lanes" name="06: slack" time="0.405414">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="07: changelog_from_git_commits" time="0.038651">
+      <testcase classname="fastlane.lanes" name="07: changelog_from_git_commits" time="0.036965">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="08: crashlytics" time="21.487833">
+      <testcase classname="fastlane.lanes" name="08: crashlytics" time="11.24663">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="09: get_version_number" time="0.742951">
+      <testcase classname="fastlane.lanes" name="09: get_version_number" time="0.637829">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="10: Switch to post_to_slack lane" time="0.000331">
+      <testcase classname="fastlane.lanes" name="10: Switch to post_to_slack lane" time="0.000531">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="11: slack" time="0.514827">
+      <testcase classname="fastlane.lanes" name="11: slack" time="0.498959">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="12: add_git_tag" time="0.030374">
+      <testcase classname="fastlane.lanes" name="12: add_git_tag" time="0.030237">
         
       </testcase>
     

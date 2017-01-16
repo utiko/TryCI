@@ -5,7 +5,7 @@
 	<key>teamID</key>
 	<string>VYTL2GMW7F</string>
 	<key>method</key>
-	<string>app-store</string>
+	<string>ad-hoc</string>
 	<key>uploadSymbols</key>
 	<true/>
 	<key>uploadBitcode</key>
