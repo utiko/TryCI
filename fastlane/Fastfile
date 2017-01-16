@@ -6,6 +6,12 @@ def version_string(version_number, build_number)
   "#{version_number} (#{build_number})"
 end
 
+def change_log_since_last_tag
+    # http://git-scm.com/docs/pretty-formats
+    # <short hash> <commit title>
+    return changelog_from_git_commits(pretty: '%h %s')
+end
+
 lane :before_integration do
   post_to_slack(progress:"[:train:------]", message: "Start building")
   # fetch the number of commits in the current branch
@@ -49,13 +55,22 @@ lane :after_integration do
     message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
   )
 
-  post_to_slack(progress:"[---:train:---]", message: "Uploading to the App Store")
+  post_to_slack(progress:"[--:train:----]", message: "Uploading to the App Store")
 
   gym(scheme: "TryCI")
+  
+  post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
+  
+  crashlytics(
+    notes: change_log_since_last_tag,
+    notifications: notify_testers
+  )
 
   post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
+  
+  change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
-  testflight
+  testflight(changelog: change_log)
 
   post_to_slack(progress:"[-----:train:-]", message: "Build is processed in ready to be tested #{get_version_number()}")
 
