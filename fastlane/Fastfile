@@ -53,7 +53,7 @@ lane :after_integration do
 
   gym(scheme: "TryCI")
 
-  post_to_slack(progress:"[---:train:---]", message: "Processing with Testflight to the App Store")
+  post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Testflight")
 
   testflight
 
