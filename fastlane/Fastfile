@@ -55,15 +55,15 @@ lane :after_integration do
     message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
   )
 
-  post_to_slack(progress:"[--:train:----]", message: "Uploading to the App Store")
+  post_to_slack(progress:"[--:train:----]", message: "Preparing IPA file")
 
   gym(scheme: "TryCI")
   
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
   crashlytics(
-    notes: change_log_since_last_tag,
-    notifications: notify_testers
+    notes: change_log_since_last_tag
+              #    notifications: notify_testers
   )
 
 #post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
