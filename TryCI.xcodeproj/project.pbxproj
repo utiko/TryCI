@@ -13,6 +13,8 @@
 		3D7B05141E2CB23500A4AB6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7B05121E2CB23500A4AB6D /* Main.storyboard */; };
 		3D7B05161E2CB23500A4AB6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D7B05151E2CB23500A4AB6D /* Assets.xcassets */; };
 		3D7B05191E2CB23500A4AB6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7B05171E2CB23500A4AB6D /* LaunchScreen.storyboard */; };
+		3DC3CEF81E2D661900B27028 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC3CEF61E2D661900B27028 /* Fabric.framework */; };
+		3DC3CEF91E2D661900B27028 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC3CEF71E2D661900B27028 /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		3D7B05151E2CB23500A4AB6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D7B05181E2CB23500A4AB6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D7B051A1E2CB23500A4AB6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DC3CEF61E2D661900B27028 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		3DC3CEF71E2D661900B27028 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DC3CEF91E2D661900B27028 /* Crashlytics.framework in Frameworks */,
+				3DC3CEF81E2D661900B27028 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +76,8 @@
 				3D7B05151E2CB23500A4AB6D /* Assets.xcassets */,
 				3D7B05171E2CB23500A4AB6D /* LaunchScreen.storyboard */,
 				3D7B051A1E2CB23500A4AB6D /* Info.plist */,
+				3DC3CEF61E2D661900B27028 /* Fabric.framework */,
+				3DC3CEF71E2D661900B27028 /* Crashlytics.framework */,
 				3D7B05091E2CB23500A4AB6D /* Supporting Files */,
 			);
 			path = TryCI;
@@ -97,6 +105,7 @@
 				3D7B05021E2CB23500A4AB6D /* Sources */,
 				3D7B05031E2CB23500A4AB6D /* Frameworks */,
 				3D7B05041E2CB23500A4AB6D /* Resources */,
+				3DC3CEF51E2D660400B27028 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -153,6 +162,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3DC3CEF51E2D660400B27028 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 30c7ecedde6ae2e38fe44e6865751afbbd8e0686 2a94d32a5622b70756ad7dc0419e7f715d6e057c5b67f8f8324feaece5341aa3";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3D7B05021E2CB23500A4AB6D /* Sources */ = {
@@ -284,6 +309,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = VYTL2GMW7F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TryCI",
+				);
 				INFOPLIST_FILE = TryCI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -297,6 +326,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = VYTL2GMW7F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TryCI",
+				);
 				INFOPLIST_FILE = TryCI/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
