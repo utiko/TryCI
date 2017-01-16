@@ -308,6 +308,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kostya Kolesnyk (FE8Z3MA7TN)";
 				DEVELOPMENT_TEAM = VYTL2GMW7F;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -327,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Turfmapp Inc. (VYTL2GMW7F)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = VYTL2GMW7F;
 				FRAMEWORK_SEARCH_PATHS = (
