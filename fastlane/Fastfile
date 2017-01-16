@@ -7,7 +7,7 @@ def version_string(version_number, build_number)
 end
 
 lane :before_integration do
-  post_to_slack(progress:"[------:train:]", message: "Start building")
+  post_to_slack(progress:"[:train:------]", message: "Start building")
   # fetch the number of commits in the current branch
   build_number = number_of_commits
 
@@ -26,7 +26,7 @@ lane :before_integration do
   # Download provisioning profiles for the app and copy them to the correct folder.
   sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: true)
 
-  post_to_slack(progress:"[-----:train:-]", message: "Building new release version #{get_version_number()}")
+  post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{get_version_number()}")
 
 end
 
@@ -53,11 +53,11 @@ lane :after_integration do
 
   gym(scheme: "TryCI")
 
-  post_to_slack(progress:"[---:train:---]", message: "Processing with Testflight to the App Store")
+  post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
 
   testflight
 
-  post_to_slack(progress:"[-:train:-----]", message: "Build is processed in ready to be tested #{get_version_number()}")
+  post_to_slack(progress:"[-----:train:-]", message: "Build is processed in ready to be tested #{get_version_number()}")
 
   # Keep committing and tagging actions after export & upload to prevent confirm the changes to the repo if something went wrong
   add_git_tag(
@@ -68,7 +68,7 @@ lane :after_integration do
 
   push_git_tags
 
-  post_to_slack(progress:"[:train:--]", message: "Pushing version to remote")
+  post_to_slack(progress:"[------:train:]", message: "Pushing version to remote")
 
 end
 
