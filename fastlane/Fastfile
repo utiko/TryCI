@@ -53,6 +53,8 @@ lane :after_integration do
 
   gym(scheme: "TryCI")
 
+  post_to_slack(progress:"[---:train:---]", message: "Processing with Testflight to the App Store")
+
   testflight
 
   post_to_slack(progress:"[-:train:-----]", message: "Build is processed in ready to be tested #{get_version_number()}")
