@@ -16,6 +16,11 @@ lane :before_integration do
   post_to_slack(progress:"[:train:------]", message: "Start building")
   # fetch the number of commits in the current branch
   build_number = number_of_commits
+  
+  version_number = get_version_number()
+  
+  complete_version_number = version_string(version_number, build_number)
+
 
   # Set number of commits as the build number in the project's plist file before the bot actually start building the project.
   # This way, the generated archive will have an auto-incremented build number.
@@ -32,7 +37,7 @@ lane :before_integration do
   # Download provisioning profiles for the app and copy them to the correct folder.
   sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: true)
 
-  post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{get_version_number()}")
+  post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
 
 end
 
@@ -44,10 +49,9 @@ lane :after_integration do
     path: plist_file,
     key: 'CFBundleVersion',
   )
-  version_number = get_info_plist_value(
-    path: plist_file,
-    key: 'CFBundleShortVersionString',
-  )
+  version_number = get_version_number()
+  
+  complete_version_number = version_string(version_number, build_number)
 
   # Commit changes done in the plist file
   #  git_commit(
@@ -73,16 +77,16 @@ lane :after_integration do
 
   post_to_slack(progress:"[----:train:--]", message: "Building for AppStore")
 
-  gym(scheme: "TryCI", clean: false, export_method:"app-store", xcargs: "ARCHIVE=YES")
+  gym(scheme: "TryCI", clean: false, export_method:"app-store")
 
   post_to_slack(progress:"[-----:train:-]", message: "Processing for testing with Testflight")
   
-  complete_version_number = version_string(version_number, build_number)
+  
   change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
   testflight(changelog: change_log)
 
-  post_to_slack(progress:"[------:train:]", message: "Build is processed in ready to be tested #{get_version_number()} :tada:")
+  post_to_slack(progress:"[------:train:]", message: "Build is processed in ready to be tested #{complete_version_number} :tada:")
 
   # Keep committing and tagging actions after export & upload to prevent confirm the changes to the repo if something went wrong
   add_git_tag(
@@ -91,7 +95,7 @@ lane :after_integration do
 
 #push_to_git_remote
 
-#  push_git_tags
+  push_git_tags
 
 #  post_to_slack(progress:"[------:train:]", message: "Pushing version to remote")
 
