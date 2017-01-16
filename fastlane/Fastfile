@@ -2,6 +2,10 @@ before_all do
   ENV["SLACK_URL"] ||= "https://hooks.slack.com/services/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"
 end
 
+def version_string(version_number, build_number)
+  "#{version_number} (#{build_number})"
+end
+
 lane :before_integration do
   post_to_slack(progress:"[------:train:]", message: "Start building")
   # fetch the number of commits in the current branch
