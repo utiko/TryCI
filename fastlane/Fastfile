@@ -50,14 +50,15 @@ lane :after_integration do
   )
 
   # Commit changes done in the plist file
-  git_commit(
-    path: ["#{plist_file}"],
-    message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
-  )
+  #  git_commit(
+  # path: ["#{plist_file}"],
+  # message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
+  #)
 
   post_to_slack(progress:"[--:train:----]", message: "Preparing IPA file")
 
-  gym(scheme: "TryCI")
+  gym
+  #(scheme: "TryCI")
   
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
@@ -81,11 +82,11 @@ lane :after_integration do
     tag: "beta/v#{version_number}_#{build_number}"
   )
 
-  push_to_git_remote
+#push_to_git_remote
 
-  push_git_tags
+#  push_git_tags
 
-  post_to_slack(progress:"[------:train:]", message: "Pushing version to remote")
+#  post_to_slack(progress:"[------:train:]", message: "Pushing version to remote")
 
 end
 
