@@ -55,10 +55,10 @@ lane :after_integration do
   # message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
   #)
 
-  post_to_slack(progress:"[--:train:----]", message: "Preparing IPA file")
+  post_to_slack(progress:"[--:train:----]", message: "Building for testiong")
 
-  gym(scheme: "TryCI")
-  
+  gym(scheme: "TryCI", clean: true, export_method:"ad-hoc", xcargs: "ARCHIVE=YES")
+
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
   crashlytics(
@@ -68,13 +68,17 @@ lane :after_integration do
               #    notifications: notify_testers
   )
 
-#post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
+  post_to_slack(progress:"[----:train:--]", message: "Building for AppStore")
+
+  gym(scheme: "TryCI", clean: false, export_method:"app-store", xcargs: "ARCHIVE=YES")
+
+  post_to_slack(progress:"[-----:train:-]", message: "Processing for testing with Testflight")
   
-#change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
+  change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
-#testflight(changelog: change_log)
+  testflight(changelog: change_log)
 
-  post_to_slack(progress:"[-----:train:-]", message: "Build is processed in ready to be tested #{get_version_number()}")
+  post_to_slack(progress:"[------:train:]", message: "Build is processed in ready to be tested #{get_version_number()} :tada:")
 
   # Keep committing and tagging actions after export & upload to prevent confirm the changes to the repo if something went wrong
   add_git_tag(
