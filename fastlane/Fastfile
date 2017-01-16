@@ -66,11 +66,11 @@ lane :after_integration do
     notifications: notify_testers
   )
 
-  post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
+#post_to_slack(progress:"[----:train:--]", message: "Processing for testing with Testflight")
   
-  change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
+#change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
-  testflight(changelog: change_log)
+#testflight(changelog: change_log)
 
   post_to_slack(progress:"[-----:train:-]", message: "Build is processed in ready to be tested #{get_version_number()}")
 
