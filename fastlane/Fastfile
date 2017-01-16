@@ -62,6 +62,8 @@ lane :after_integration do
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
   crashlytics(
+    api_token: ENV["CRASHLYTICS_TOKEN"],
+    build_secret: ENV["CRASHLYTICS_SECRET"],
     notes: change_log_since_last_tag
               #    notifications: notify_testers
   )
