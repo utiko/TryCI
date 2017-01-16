@@ -19,6 +19,7 @@
 		3D34AD801E2CCD7800C31990 /* Appfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		3D34AD811E2CCD7800C31990 /* Deliverfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Deliverfile; path = fastlane/Deliverfile; sourceTree = SOURCE_ROOT; };
 		3D34AD821E2CCD7800C31990 /* Fastfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; };
+		3D58EFF61E2CDA320019A0DA /* ExportOptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = ExportOptions.plist; path = fastlane/ExportOptions.plist; sourceTree = SOURCE_ROOT; };
 		3D7B05061E2CB23500A4AB6D /* TryCI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TryCI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D7B050A1E2CB23500A4AB6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3D7B050C1E2CB23500A4AB6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 				3D34AD801E2CCD7800C31990 /* Appfile */,
 				3D34AD811E2CCD7800C31990 /* Deliverfile */,
 				3D34AD821E2CCD7800C31990 /* Fastfile */,
+				3D58EFF61E2CDA320019A0DA /* ExportOptions.plist */,
 				3D7B050A1E2CB23500A4AB6D /* main.m */,
 			);
 			name = "Supporting Files";
