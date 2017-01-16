@@ -74,6 +74,7 @@ lane :after_integration do
 
   post_to_slack(progress:"[-----:train:-]", message: "Processing for testing with Testflight")
   
+  complete_version_number = version_string(version_number, build_number)
   change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
   testflight(changelog: change_log)
