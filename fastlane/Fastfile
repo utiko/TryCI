@@ -1,0 +1,98 @@
+before_all do
+  ENV["SLACK_URL"] ||= "https://hooks.slack.com/services/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"
+end
+
+lane :before_integration do
+  post_to_slack(progress:"[------:train:]", message: "Start building")
+  # fetch the number of commits in the current branch
+  build_number = number_of_commits
+
+  # Set number of commits as the build number in the project's plist file before the bot actually start building the project.
+  # This way, the generated archive will have an auto-incremented build number.
+  set_info_plist_value(
+    path: './TryCI/Info.plist',
+    key: 'CFBundleVersion',
+    value: "#{build_number}"
+  )
+
+
+  # Run `pod install`
+  # cocoapods
+
+  # Download provisioning profiles for the app and copy them to the correct folder.
+  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: true)
+
+  post_to_slack(progress:"[-----:train:-]", message: "Building new release version #{get_version_number()}")
+
+end
+
+lane :after_integration do
+  plist_file = './TryCI/Info.plist'
+
+  # Get the build and version numbers from the project's plist file
+  build_number = get_info_plist_value(
+    path: plist_file,
+    key: 'CFBundleVersion',
+  )
+  version_number = get_info_plist_value(
+    path: plist_file,
+    key: 'CFBundleShortVersionString',
+  )
+
+  # Commit changes done in the plist file
+  git_commit(
+    path: ["#{plist_file}"],
+    message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
+  )
+
+  post_to_slack(progress:"[---:train:---]", message: "Uploading to the App Store")
+
+  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
+  ipa_path = "#{ipa_folder}/TryGIT.ipa"
+  sh "mkdir -p #{ipa_folder}"
+
+  # Export the IPA from the archive file created by the bot
+  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptions.plist'"
+
+  # Upload the build to iTunes Connect, it won't submit this IPA for review.
+  deliver(
+    force: true,
+    ipa: ipa_path
+  )
+
+  post_to_slack(progress:"[-:train:-----]", message: "Build is processed in ready to be tested #{get_version_number()}")
+
+  # Keep committing and tagging actions after export & upload to prevent confirm the changes to the repo if something went wrong
+  add_git_tag(
+    tag: "beta/v#{version_number}_#{build_number}"
+  )
+
+  push_to_git_remote
+
+  push_git_tags
+
+  post_to_slack(progress:"[:train:--]", message: "Pushing version to remote")
+
+end
+
+
+private_lane :post_to_slack do |options|
+  progress = options[:progress]
+  message = options[:message]
+  success = options[:success]
+  last_slack_progress = progress
+  slack(
+    message: "#{progress} #{message}",
+    slack_url: "https://hooks.slack.com/services/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",
+    success: success,
+    default_payloads: []
+  )
+end
+
+error do |lane, exception|
+  puts "Fail? with '#{lane}'  Excetption #{exception} "
+  if lane == :release_new_version
+    failure_message = last_slack_progress.gsub(":train:", ":boom:")
+    post_to_slack(message: "#{failure_message} Broken! #{exception}", success: false)
+  end
+end
