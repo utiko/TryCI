@@ -52,8 +52,15 @@ lane :after_integration do
   sh "mkdir -p #{ipa_folder}"
 
   # Export the IPA from the archive file created by the bot
-  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptions.plist'"
+  #sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptions.plist'"
+  complete_version_number = version_string(version_number, build_number)
+  change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
+  testflight(
+        changelog: change_log,
+        skip_submission: true,
+        distribute_external: false
+  )
   # Upload the build to iTunes Connect, it won't submit this IPA for review.
   deliver(
     force: true,
