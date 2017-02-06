@@ -71,7 +71,6 @@ lane :after_integration do
 
   gym(
       scheme: "TryCI",
-      clean: true,
       export_method:"ad-hoc",
       xcargs: "ARCHIVE=YES",
       skip_build_archive: true,
@@ -98,7 +97,6 @@ lane :after_integration do
 
   gym(
       scheme: "TryCI",
-      clean: false,
       export_method:"app-store",
       skip_build_archive: true,
       archive_path: ENV['XCS_ARCHIVE']
