@@ -35,9 +35,9 @@ lane :before_integration do
   # cocoapods
 
   # Download provisioning profiles for the app and copy them to the correct folder.
-  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', force: true)
+  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', force: true, adhoc:true)
 
-  post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
+post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
 
 end
 
