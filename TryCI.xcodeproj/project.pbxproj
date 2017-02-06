@@ -344,8 +344,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.turfmapp.TryCI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5984fe2c-5a6c-4509-82af-5f915c56f05b";
-				PROVISIONING_PROFILE_SPECIFIER = "TryCI AdHoc";
+				PROVISIONING_PROFILE = "371f3b4d-2161-4def-b950-02b88a8db5b7";
+				PROVISIONING_PROFILE_SPECIFIER = "Try CI - AdHoc2";
 			};
 			name = Release;
 		};
