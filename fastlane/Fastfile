@@ -63,13 +63,23 @@ lane :after_integration do
 
   post_to_slack(progress:"[--:train:----]", message: "Building for testiong")
 
-#gym(scheme: "TryCI", clean: true, export_method:"ad-hoc", xcargs: "ARCHIVE=YES")
+#
 
-#ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
-  ipa_path = "Turfmapp-AdHoc.ipa"
-  # sh "mkdir -p #{ipa_folder}"
+  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
+  ipa_path = "#{ipa_folder}/Turfmapp.ipa"
+  sh "mkdir -p #{ipa_folder}"
 
-  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -exportOptionsPlist './ExportOptionsAdHoc.plist'"
+  gym(
+      scheme: "TryCI",
+      clean: true,
+      export_method:"ad-hoc",
+      xcargs: "ARCHIVE=YES"
+      skip_build_archive: true,
+      archive_path: ENV['XCS_ARCHIVE']
+  )
+
+
+#sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptionsAdHoc.plist'"
 
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
