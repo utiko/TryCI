@@ -65,9 +65,9 @@ lane :after_integration do
 
 #gym(scheme: "TryCI", clean: true, export_method:"ad-hoc", xcargs: "ARCHIVE=YES")
 
-  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
-  ipa_path = "#{ipa_folder}Turfmapp-AdHoc.ipa"
-  sh "mkdir -p #{ipa_folder}"
+#ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
+  ipa_path = "Turfmapp-AdHoc.ipa"
+  # sh "mkdir -p #{ipa_folder}"
 
   sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -exportOptionsPlist './ExportOptionsAdHoc.plist'"
 
