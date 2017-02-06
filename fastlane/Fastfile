@@ -63,7 +63,13 @@ lane :after_integration do
 
   post_to_slack(progress:"[--:train:----]", message: "Building for testiong")
 
-  gym(scheme: "TryCI", clean: true, export_method:"ad-hoc", xcargs: "ARCHIVE=YES")
+#gym(scheme: "TryCI", clean: true, export_method:"ad-hoc", xcargs: "ARCHIVE=YES")
+
+  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
+  ipa_path = "#{ipa_folder}/#{target}.ipa"
+  sh "mkdir -p #{ipa_folder}"
+
+  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptionsAdHoc.plist'"
 
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
@@ -71,7 +77,8 @@ lane :after_integration do
     api_token: ENV["CRASHLYTICS_TOKEN"],
     build_secret: ENV["CRASHLYTICS_SECRET"],
     notes: changelog,
-    emails: ["tiko@utiko.net", "ira777hm@gmail.com"]
+    emails: ["tiko@utiko.net", "ira777hm@gmail.com"],
+    ipa: ipa_path
               #    notifications: notify_testers
   )
   #groups: [“internal-testers”]
