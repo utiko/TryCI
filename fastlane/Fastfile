@@ -35,7 +35,7 @@ lane :before_integration do
   # cocoapods
 
   # Download provisioning profiles for the app and copy them to the correct folder.
-  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', adhoc: true, force:true)
+  #sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', adhoc: true, force:true)
 
   post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
 
@@ -94,16 +94,22 @@ lane :after_integration do
   #groups: [“internal-testers”]
 
 
-#  post_to_slack(progress:"[----:train:--]", message: "Building for AppStore")
+  post_to_slack(progress:"[----:train:--]", message: "Building for AppStore")
 
-#  gym(scheme: "TryCI", clean: false, export_method:"app-store")
+  gym(
+      scheme: "TryCI",
+      clean: false,
+      export_method:"app-store",
+      skip_build_archive: true,
+      archive_path: ENV['XCS_ARCHIVE']
+  )
 
-#  post_to_slack(progress:"[-----:train:-]", message: "Processing for testing with Testflight")
+  post_to_slack(progress:"[-----:train:-]", message: "Processing for testing with Testflight")
   
   
   change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
-#testflight(changelog: changelog)
+  testflight(changelog: changelog)
 
   post_to_slack(progress:"[------:train:]", message: "Build is processed in ready to be tested #{complete_version_number} :tada:")
 
