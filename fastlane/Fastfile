@@ -69,7 +69,7 @@ lane :after_integration do
   ipa_path = "#{ipa_folder}Turfmapp-AdHoc.ipa"
   sh "mkdir -p #{ipa_folder}"
 
-  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -IDEPostProgressNotifications=YES -DVTAllowServerCertificates=YES -DVTSigningCertificateSourceLogLevel=3 -DVTSigningCertificateManagerLogLevel=3 -DTDKProvisioningProfileExtraSearchPaths=/Library/Developer/XcodeServer/ProvisioningProfiles -exportOptionsPlist './ExportOptionsAdHoc.plist'"
+  sh "xcrun xcodebuild -exportArchive -archivePath \"#{ENV['XCS_ARCHIVE']}\" -exportPath \"#{ipa_path}\" -exportOptionsPlist './ExportOptionsAdHoc.plist'"
 
   post_to_slack(progress:"[---:train:---]", message: "Processing for testing with Crashlytics")
   
