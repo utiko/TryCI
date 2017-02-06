@@ -65,9 +65,9 @@ lane :after_integration do
 
 #
 
-  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
-  ipa_path = "#{ipa_folder}/Turfmapp.ipa"
-  sh "mkdir -p #{ipa_folder}"
+#  ipa_folder = "#{ENV['XCS_DERIVED_DATA_DIR']}/deploy/#{version_number}.#{build_number}/"
+#  ipa_path = "#{ipa_folder}Turfmapp.ipa"
+#  sh "mkdir -p #{ipa_folder}"
 
   gym(
       scheme: "TryCI",
@@ -88,7 +88,7 @@ lane :after_integration do
     build_secret: ENV["CRASHLYTICS_SECRET"],
     notes: changelog,
     emails: ["tiko@utiko.net", "ira777hm@gmail.com"],
-    ipa_path: ipa_path
+              #    ipa_path: ipa_path
               #    notifications: notify_testers
   )
   #groups: [“internal-testers”]
