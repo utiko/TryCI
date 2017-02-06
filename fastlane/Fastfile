@@ -35,7 +35,7 @@ lane :before_integration do
   # cocoapods
 
   # Download provisioning profiles for the app and copy them to the correct folder.
-  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: true)
+  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: false)
 
   post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
 
@@ -58,6 +58,8 @@ lane :after_integration do
   # path: ["#{plist_file}"],
   # message: "Version bump to #{version_number} (#{build_number}) by CI Builder"
   #)
+  
+  changelog = File.read("Change.log")
 
   post_to_slack(progress:"[--:train:----]", message: "Building for testiong")
 
@@ -68,7 +70,7 @@ lane :after_integration do
   crashlytics(
     api_token: ENV["CRASHLYTICS_TOKEN"],
     build_secret: ENV["CRASHLYTICS_SECRET"],
-    notes: change_log_since_last_tag,
+    notes: changelog,
     emails: ["tiko@utiko.net", "ira777hm@gmail.com"]
               #    notifications: notify_testers
   )
@@ -84,23 +86,25 @@ lane :after_integration do
   
   change_log = "CHANGELOG TBD. Version: #{complete_version_number}"
 
-  testflight(changelog: change_log)
+  testflight(changelog: changelog)
 
   post_to_slack(progress:"[------:train:]", message: "Build is processed in ready to be tested #{complete_version_number} :tada:")
 
   # Keep committing and tagging actions after export & upload to prevent confirm the changes to the repo if something went wrong
-  add_git_tag(
-    tag: "beta/v#{version_number}_#{build_number}"
-  )
+  #add_git_tag(
+  #  tag: "beta/v#{version_number}_#{build_number}"
+  #)
 
 #push_to_git_remote
 
-  push_git_tags
+#push_git_tags
 
 #  post_to_slack(progress:"[------:train:]", message: "Pushing version to remote")
 
 end
 
+
+last_slack_progress = "[:train:------]"
 
 private_lane :post_to_slack do |options|
   progress = options[:progress]
@@ -108,7 +112,7 @@ private_lane :post_to_slack do |options|
   success = options[:success]
   last_slack_progress = progress
   slack(
-    message: "#{progress} #{message}",
+    message: "#{progress} - test CI - #{message}",
     slack_url: "https://hooks.slack.com/services/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",
     success: success,
     default_payloads: []
@@ -117,8 +121,8 @@ end
 
 error do |lane, exception|
   puts "Fail? with '#{lane}'  Excetption #{exception} "
-  if lane == :release_new_version
+  #if lane == :release_new_version
     failure_message = last_slack_progress.gsub(":train:", ":boom:")
     post_to_slack(message: "#{failure_message} Broken! #{exception}", success: false)
-  end
+    #end
 end
