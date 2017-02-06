@@ -35,11 +35,9 @@ lane :before_integration do
   # cocoapods
 
   # Download provisioning profiles for the app and copy them to the correct folder.
-  #match(app_identifier: "com.turfmapp.TryCI", type: "adhoc", verbose:true, force_for_new_devices: true)
-  sigh(force: true)
-  #(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles')
+  sigh(output_path: '/Library/Developer/XcodeServer/ProvisioningProfiles', skip_install: true)
 
-post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
+  post_to_slack(progress:"[-:train:-----]", message: "Building new release version #{complete_version_number}")
 
 end
 
