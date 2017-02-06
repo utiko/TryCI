@@ -78,7 +78,7 @@ lane :after_integration do
     build_secret: ENV["CRASHLYTICS_SECRET"],
     notes: changelog,
     emails: ["tiko@utiko.net", "ira777hm@gmail.com"],
-    ipa: ipa_path
+    ipa_path: ipa_path
               #    notifications: notify_testers
   )
   #groups: [“internal-testers”]
