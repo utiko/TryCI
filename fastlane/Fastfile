@@ -73,7 +73,7 @@ lane :after_integration do
       scheme: "TryCI",
       clean: true,
       export_method:"ad-hoc",
-      xcargs: "ARCHIVE=YES"
+      xcargs: "ARCHIVE=YES",
       skip_build_archive: true,
       archive_path: ENV['XCS_ARCHIVE']
   )
